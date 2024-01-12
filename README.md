@@ -34,20 +34,12 @@ You may also add this flake as a dependency of other flakes.
 You may find adding udev rules by this snippet useful:
 
 ```nix
-services.udev.packages = [
-  (pkgs.writeTextFile {
-    name = "labjack";
-    text = ''
-      SUBSYSTEM!="usb_device", ACTION!="add", GOTO="labjack_rules_end"
-
-      # LabJack Vendor ID
-      ATTRS{idVendor}=="0cd5", MODE="0666", GROUP="adm"
-
-      LABEL="labjack_rules_end"
-    '';
-    destination = "/etc/udev/rules.d/90-labjack.rules";
-  })
-];
+{ pkgs, ... }: let
+  exodriver-flake = import (fetchTarball https://github.com/UlyssesZh/exodriver-flake/archive/master.tar.gz);
+in {
+  # ...
+  services.udev.packages = [ exodriver-flake.packages.${pkgs.system}.exodriver ];
+}
 ```
 
 ## License

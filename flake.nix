@@ -23,7 +23,8 @@
         pname = "LabJackPython";
         inherit version;
         src = LabJackPython-pip;
-        buildInputs = [ exo ];
+        propagatedBuildInputs = [ exo ];
+        pythonImportsCheck = [ "LabJackPython" "Modbus" "u3" "u6" "u12" "ue9" ];
         patches = [
           (substituteAll {
             src = ./lib-path.patch;
