@@ -1,0 +1,35 @@
+diff --git a/src/LabJackPython.py b/src/LabJackPython.py
+index c6ccd00..7c88de9 100644
+--- a/src/LabJackPython.py
++++ b/src/LabJackPython.py
+@@ -109,7 +109,7 @@ def _loadLinuxSo():
+     """
+     Attempts to load the liblabjackusb.so for Linux.
+     """
+-    l = ctypes.CDLL("liblabjackusb.so", use_errno=True)
++    l = ctypes.CDLL("@liblabjackusb@", use_errno=True)
+     l.LJUSB_StreamTO.errcheck = errcheck
+     l.LJUSB_Read.errcheck = errcheck
+     return l
+@@ -2834,7 +2834,7 @@ def DriverPresent():
+         except:
+             try:
+                 #Linux
+-                ctypes.cdll.LoadLibrary("liblabjackusb.so")
++                ctypes.cdll.LoadLibrary("@liblabjackusb@")
+                 return True
+             except:
+                 try:
+diff --git a/src/u12.py b/src/u12.py
+index 12c16c7..3e5056f 100644
+--- a/src/u12.py
++++ b/src/u12.py
+@@ -348,7 +348,7 @@ def errcheck(ret, func, args):
+         return ret
+ 
+ def _loadLinuxSo():
+-    l = ctypes.CDLL("liblabjackusb.so", use_errno=True)
++    l = ctypes.CDLL("@liblabjackusb@", use_errno=True)
+     l.LJUSB_Stream.errcheck = errcheck
+     l.LJUSB_Read.errcheck = errcheck
+     return l
